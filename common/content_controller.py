@@ -23,4 +23,5 @@ class ImageController:
     def image_remove(remove_image, media_path):
         except_list = [os.path.join(media_path, default_image) for default_image in BackGroundImageFiles]
         if remove_image not in except_list:
-            os.remove(os.path.join(MEDIA_ROOT, remove_image))
+            if os.path.isfile(remove_image):
+                os.remove(os.path.join(MEDIA_ROOT, remove_image))
