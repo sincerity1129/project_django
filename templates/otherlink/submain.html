@@ -70,8 +70,8 @@
               <div>
               </div>
             </div>
-            <div style="text-align: left; font-size: 10px; margin-left: 10px;">ㅇㅇ이 <b>외 {{content.heart_count}}명</b>이 좋아합니다</div>
-            <div style="display:flex; flex-direction:row; margin:0 10px;">
+            <div style="text-align: left; font-size: 10px; margin-left: 10px;"><b>{{content.heart_count}}</b>명이 좋아합니다</div>
+            <div style="display:flex; flex-direction:row; margin:20px 10px;">
               <div style="font-size: 12px; font-weight: bold;">{{user_info.nickname}}</div>
               <div style="font-size: 12px; margin-left: 5px; margin-bottom: 15px;">{{content.content_text}}</div>
             </div>
@@ -687,36 +687,6 @@
       });
 
     });
-
-        // like click action controller
-        $('.like_btn').click(function(){
-          let feed_number = $(this).attr('id');
-          
-          let fd = new FormData;
-          fd.append('feed_number', feed_number);
-    
-          $.ajax({
-            url: '/follow/like_click',
-            data: fd,
-            method: "POST",
-            headers: {
-              'X-CSRFToken': csrf_token
-            },
-            processData: false,
-            contentType: false,
-            success: function(data){
-              alert(data["check"])
-            },
-            error: function(request, status, error){
-              console.log("에러");
-            },
-            complete: function(){
-              console.log("완료");
-              location.reload(true)
-            }
-          });
-    
-        });
     
         // otherlink move action
         $('.link_move').click(function(){
