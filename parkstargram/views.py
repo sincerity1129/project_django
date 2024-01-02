@@ -9,6 +9,11 @@ class PreviewProcess(APIView):
         return render(request, 'parkstargram/preview.html')
     
     def post(self, request):
-        session_info=json_merge(session_info=request.session['email'])
-        return JsonResponse(session_info)
+        try:
+            session_info=json_merge(session_info=request.session['email'])
+            return JsonResponse(session_info)
+        except:
+            request.session['email']=None
+            session_info=json_merge(session_info=request.session['email'])
+            return JsonResponse(session_info)
         
