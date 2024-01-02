@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Login Page</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>  
+    <!-- jQuery -->
+    <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
+</head>
+  <body style="background-color:#FAFAFA">
+    <div style="text-align: center; display: flex; justify-content:space-between; margin-top: 4%;">
+      <div></div>
+      <div>
+        <div style=" background-color: white; border: solid 1px gray; width: 250px; height: auto; margin-bottom: 10px;">
+          <div> 
+            <a href="{% url 'preview_home' %}">
+              <img style="width: 65%; margin: 10px;" src="https://i.namu.wiki/i/C9DgUkHfi6o7f1AWb529VHjHQeWtTFhVdFNc6YVScQzg4pARwRjBOWgidRveffl1j8ZqQbXQ40d64t1XVHL6Zw.svg">
+            </a>
+          </div>
+          <div style="font-weight: bold; margin-bottom: 5px; padding: 0 25px;"> 친구들의 사진과 동영상을 보려면 가입하세요. </div>
+          <div style="padding: 0 25px;"> 
+            <div class="form-floating mb-3">
+              <input type="email" style="font-size: 14px; min-height:0%; height: 10px;" class="form-control" id="email_address" placeholder="name@example.com">
+              <label for="floatingInput" style="font-size: 8px; padding: 4px 10px;">이메일주소</label>
+            </div>
+          </div>
+          <div style="padding: 0 25px;"> 
+            <div class="form-floating mb-3">
+              <input onkeydown="checkEnter(event)" type="password" style="font-size: 14px; min-height:0%; height: 10px;" class="form-control" id="user_password" placeholder="Password">
+              <label for="floatingInput" style="font-size: 8px; padding: 4px 10px;">비밀번호</label>
+            </div>
+          </div>
+          <button style="width: 95%; margin-bottom: 5px;" id="login_btn" class="btn btn-primary"> 로그인 </button>
+          <div>또는</div>
+          <button style="width: 95%; margin-bottom: 5px;" id="test_login_btn" class="btn btn-primary"> 둘러보기 </button>
+        </div>
+        <div style="background-color: white; width: 250px; height: 50px; line-height: 3.0;"> 
+            계정이 있으신가요? 
+            <a href="{% url 'user_app:join' %}">가입하기</a> 
+        </div>
+      </div>
+      <div></div>
+    </div>
+  </body>
+  <script>
+    function checkEnter(event) {
+      if (event.key === 'Enter') {
+          loginAction();
+      }
+  }
+    $('#login_btn').click(function loginAction(){
+        var csrf_token = "{{ csrf_token }}";
+
+        let email = document.getElementById('email_address').value;
+        let password = document.getElementById('user_password').value;
+
+        let fd = new FormData;
+        fd.append('email', email);
+        fd.append('password', password);
+
+        $.ajax({
+            url: '/login',
+            data: fd,
+            method: "POST",
+            headers: {
+              'X-CSRFToken': csrf_token
+            },
+            processData: false,
+            contentType: false,
+            success: function(data){
+              if(data['url']=="content"){
+              console.log("성공");
+              alert(data["realname"]+"님 오신 것을 환영합니다.")
+              location.replace(data['url']);
+              } else {
+                alert(data['url'])
+              }
+            },
+            error: function(request, status, error){
+              
+              console.log("에러");
+            },
+            complete: function(){
+              console.log("완료");
+            }
+          });
+      });
+
+      $('#test_login_btn').click(function loginAction(){
+        var csrf_token = "{{ csrf_token }}";
+
+        let email ='test@naver.com';
+        let fd = new FormData;
+        fd.append('email', email);
+
+        $.ajax({
+            url: '/login',
+            data: fd,
+            method: "POST",
+            headers: {
+              'X-CSRFToken': csrf_token
+            },
+            processData: false,
+            contentType: false,
+            success: function(data){
+              if(data['url']=="content"){
+              console.log("성공");
+              alert(data["realname"]+"님 오신 것을 환영합니다.")
+              location.replace(data['url']);
+              } else {
+                alert(data['url'])
+              }
+            },
+            error: function(request, status, error){
+              
+              console.log("에러");
+            },
+            complete: function(){
+              console.log("완료");
+            }
+          });
+      });
+  </script>
+</html>
