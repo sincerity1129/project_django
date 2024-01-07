@@ -39,6 +39,7 @@
     <!-- feed start -->
     <div style="display:flex; background-color:#FAFAFA; flex-direction:row; text-align:center; justify-content:center; padding-top: 120px;">
       <!-- left menu start -->
+      {% block leftcontent %}
       <div style="width:600px; margin-right:430px">
         <!-- 메인 피드 내용 채우기 -->
         {%for content in user_info.contents %}
@@ -117,8 +118,10 @@
           </div>
         {% endfor %}
       </div>
+      {% endblock %}
       <!-- left menu end -->
       <!-- right menu start -->
+      {% block rightcontent %}
       <div style="width:450px; background:white; position:fixed; left: 58%">
         <div style="display: flex; flex-direction:row; align-items:center; margin-left: 20px;">
           <div class="box" style="width:70px; height:70px; border-radius:70%; overflow:hidden; margin:5px;">
@@ -184,6 +187,7 @@
           <div> 개인정보처리방침 약관 위치 인기계정 해시태그 언어 </div>
         </div>
       </div>
+      {% endblock %}
     <!-- right menu end -->
     </div>
     <!-- feed end -->
@@ -875,7 +879,7 @@
         },
         complete: function(){
           console.log("완료");
-          location.replace("/login");
+          location.replace("/");
         }
       });
     });

@@ -22,7 +22,7 @@ class OtherlinkProcess(APIView):
         # 정보 가져와서 content 정보에 맞게 페이지 띄우기 위해 DB 가져오기
         # 왼쪽 피드 관련된 정보
         content = DBController.db_filter(Contents, nickname=user.nickname).order_by('-id') # 피드 정보 가져오기
-        feed_number = DBController.all_db_search(FeedLike).values_list('feed_number', flat=True) # 좋아요 버튼 정보 가져오기
+        feed_number = DBController.db_filter(FeedLike, like_user_email=session_user.email).values_list('feed_number', flat=True) # 좋아요 버튼 정보 가져오기
         comment = DBController.all_db_search(Comment) # 댓글 정보 가져오기
         
         # 오른쪽 팔로우 관련된 정보
@@ -38,4 +38,4 @@ class OtherlinkProcess(APIView):
                                profile=user.profile_image, feed_number=feed_number, follow=follow, follower=follower,
                                following=following, session_user=session_user)
 
-        return render(request, 'otherlink/submain.html', context=dict(user_info=user_info))
+        return render(request, 'otherlink/extend_feed.html', context=dict(user_info=user_info))

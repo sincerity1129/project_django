@@ -1,0 +1,168 @@
+{% extends 'content/main.html' %}
+
+{% block leftcontent %}
+<div style="width:600px; margin-right:430px">
+  <!-- 메인 피드 내용 채우기 -->
+  {%for content in user_info.contents %}
+    <div style="margin-bottom:30px; border:solid 1px gray; background-color:white;">
+      <div style="display: flex; flex-direction:row; justify-content: space-between; align-items:center; margin-left: 10px;">
+        <div style="display: flex; flex-direction:row; align-items:center; margin-left: 10px;">
+          <div class="box" style="width:50px; height:50px; border-radius:70%; overflow:hidden; margin:5px;">
+            <img class="profile" style="width:100%; height:100%; object-fit:cover;" src="{{user_info.profile}}">  
+          </div>
+          <div>
+            {{user_info.nickname}}
+          </div>
+        </div>
+      </div>
+      <div>
+        <img class="content_image" style="width: 95%;" src="{{content.content_image}}">
+      </div>
+      <div style="display:flex; flex-direction:row; justify-content:space-between; margin:0 10px;">
+        <div>
+          <!-- 하트 누를 때 변하기 액션 -->
+          <span id="like_action_{{content.id}}" class="material-icons like_action">
+            {% if content.id in user_info.feed_number %}
+              <button id="view_feed_like_{{content.id}}" class="like_btn" style="border: none; outline: none; background-color: white;"> favorite </button>
+            {% else %}
+              <button id="non_view_feed_like_{{content.id}}" class="like_btn" style="border: none; outline: none; background-color: white;"> favorite_border </button>  
+            {% endif %}
+          </span>
+        </div>
+        <div>
+        </div>
+      </div>
+      <div style="text-align: left; font-size: 10px; margin-left: 10px;"><b>{{content.heart_count}}</b>명이 좋아합니다</div>
+      <div style="display:flex; flex-direction:row; margin:20px 10px;">
+        <div style="font-size: 12px; font-weight: bold;">{{user_info.nickname}}</div>
+        <div style="font-size: 12px; margin-left: 5px; margin-bottom: 15px;">{{content.content_text}}</div>
+      </div>
+        <!-- 댓글 내용 채우기 -->
+        {%for comment in user_info.comments %}
+          {% if content.id == comment.feed_number %}
+            <div style="display:flex; flex-direction:row; justify-content:space-between;"> 
+              <div style="display:flex; flex-direction:row;">
+                <div style="text-align: left; font-size: 12px; margin-left: 10px;">
+                  <b>{{comment.comment_user_nickname}}</b>
+                </div>
+                <div style="text-align: left; font-size: 12px; margin-left: 10px;">
+                  {{comment.comment_text}}
+                </div>
+              </div>
+                <div style="text-align: left; font-size: 5px;">
+                  {% if comment.comment_user_nickname == user_info.session_user.nickname %}
+                    <span class="material-icons">
+                      <button id="comment_delete_{{comment.id}}" class="comment_delete" style="background: none; border: none;"> delete </button>
+                    </span>
+                  {% endif %}
+                </div>
+              </div> 
+          {% endif %}
+        {% endfor %}
+      <div style="display:flex; flex-direction:row; justify-content:space-between; border-top: solid 1px gray;">
+        <textarea id="comment_text_{{content.id}}" clss="comment_text" style="box-shadow:none; border:none; outline:none;" type="text" class="form-control" id="comment-input" placeholder="댓글달기..."></textarea>
+        <button id="comment_button_{{content.id}}" class="btn btn-primary comment_button" style="width: 10%; font-size: 14px;">전송</button>
+      </div>
+    </div>
+  {% endfor %}
+</div>
+<script>
+// otherlink move action
+$('.link_move').click(function(){
+  let other_user_id = $(this).attr('id').replace('link_move_','');
+
+  let fd = new FormData;
+  fd.append('other_user_id', other_user_id)
+
+  $.ajax({
+    url: '/content/session_add',
+    method: "POST",
+    data:fd,
+    headers: {
+      'other_user_id':other_user_id,
+      'X-CSRFToken': csrf_token
+    },
+    processData: false,
+    contentType: false,
+    success: function(data){
+      console.log("성공");
+    },
+    error: function(request, status, error){
+      console.log("에러");
+    },
+    complete: function(){
+      console.log("완료");
+      location.replace('/otheruser/content')
+    }
+  });
+});
+</script>
+{% endblock %}
+
+{% block rightcontent %}
+<div style="width:450px; background:white; position:fixed; left: 58%">
+  <div style="display: flex; flex-direction:row; align-items:center; margin-left: 20px;">
+    <div class="box" style="width:70px; height:70px; border-radius:70%; overflow:hidden; margin:5px;">
+      <img class="profile" style="width:100%; height:100%; object-fit:cover;" src={{user_info.session_user.profile_image}}>
+    </div>
+    <div style="margin-left: 10px;">
+      <div id="feed_username" style="font-weight: bold;">
+        {{user_info.session_user.nickname}}
+      </div>
+      <div style="color:gray;">
+        {{user_info.session_user.realname}}
+      </div>
+    </div>
+    <div style="display: flex; flex-direction:column; margin-left: 50px;">            
+      <div style="font-weight: bold;">
+        팔로워
+      </div>
+      <div>
+        {{user_info.follower}}
+      </div>
+    </div>
+    <div style="display: flex; flex-direction:column; margin-left: 50px;">
+      <div style="font-weight: bold;">
+        팔로우
+      </div>
+      <div>
+        {{user_info.following}}
+      </div>
+    </div>
+  </div>
+  <div style="display:flex; flex-direction:row; justify-content:space-between; margin:0 10px;"> 
+    <span style="font-weight: bold; color:gray;"> 회원님을 위한 추천 </span> 
+    <div></div>
+  </div>
+  {% for exclude_user in user_info.exclude_users %}
+  <div style="display: flex; flex-direction:row; align-items:center;  justify-content:space-between; margin:0 10px;">
+    <div style="display: flex; flex-direction:row; margin:0 20px;">
+      <div class="box" style="width:35px; height:35px; border-radius:70%; overflow:hidden; margin:5px;">
+        <img class="profile" style="width:100%; height:100%; object-fit:cover;" src="{{exclude_user.profile_image}}">
+      </div>
+      <div style="left:5px; font-size:12px;">
+        <div style="text-align:left; font-weight: bold;">
+          <a id="link_move_{{exclude_user.id}}" class="link_move" href="{% url 'otheruser_app:otheruser_home' %}" style="color:black;">
+            {{exclude_user.nickname}}
+          </a>
+        </div>
+        <div style="color:gray;">
+          {{exclude_user.follow_number}}명이 팔로우 합니다
+        </div>
+      </div>
+    </div>
+    <div>
+      {% if exclude_user.email in user_info.follow %}
+        <a id="follow_select_{{exclude_user.id}}" class="follow_select" style="font-weight:bold; text-decoration:none;" href="#">팔로우중</a>
+      {% else %}
+        <a id="non_follow_select_{{exclude_user.id}}" class="follow_select" style="font-weight:bold; text-decoration:none;" href="#">팔로우</a>
+      {% endif %}
+      </div>
+  </div>
+  {% endfor %}
+  <div style="color:gray; text-align:left; font-size:12px; margin-top:20px; margin-left:25px">
+    <div> 소개 도움말 홍보센터 API 채용정보</div>
+    <div> 개인정보처리방침 약관 위치 인기계정 해시태그 언어 </div>
+  </div>
+</div>
+{% endblock %}

@@ -11,5 +11,3 @@ urlpatterns = [
     path('content/', include('content.urls')),
     path('follow/', include('feedlike.urls')),
 ]
-
-
