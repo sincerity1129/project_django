@@ -12,9 +12,9 @@ jobs:
       - name: connect ec2
         uses: appleboy/ssh-action@master
         with:
-          host: ${{ secreats.HOST }}
-          username: ${{ secreats.USERNAME }}
-          key: ${{ secreats.KEY }}
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.KEY }}
           port: 22
           script: |
             cd /home/ubuntu/project_django
