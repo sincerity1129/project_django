@@ -6,6 +6,7 @@ services:
     container_name: insta_mysql
     environment:
       MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: django_insta
     ports:
       - 3306:3306
     restart: always
