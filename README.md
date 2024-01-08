@@ -41,7 +41,7 @@
     python -m venv venv(가상환경이름)
     source venv/bin/activate
 #### 설치 라이브러리
-    pip install Django==5.0 djangorestframework==3.14.0 django-storages==1.14.2
+    pip install -r requirements.txt
 #### folder 추가
 ##### 이미지 생성 경로
     # git 최상위 폴더 이동

@@ -8,6 +8,7 @@ from django.contrib.auth.hashers import check_password
 from status_message.user_status_code import sign_up, sign_in, email_check, nickname_check
 from common.db_controller import DBController
 from common.common_controller import SessionController
+from config.default_user_create import Tester
 
 EMAIL_CHAT='@'
 
@@ -25,7 +26,6 @@ class SignUp(APIView):
         elif len(serializer.data["password"]) < 8:
             return JsonResponse(sign_up["password_limit"])
         else:
-            
             if EMAIL_CHAT not in serializer.data['email']:
                 return JsonResponse(sign_up["email_form"])
             serializer.user_create(request.data)
@@ -34,6 +34,9 @@ class SignUp(APIView):
     
 class SignIn(APIView):
     def get(self, request):
+        if not DBController.db_filter(User,email='test@naver.com').exists():
+            serializer = UserSerializer(request.data)
+            serializer.user_create(Tester)
         return render(request, 'user/login.html')
     
     def post(self, request):
@@ -43,19 +46,16 @@ class SignIn(APIView):
             SessionController.user_session_in(request, serializer.data['email'])
             success_url = {"url":"content", "realname": user.realname}
             return JsonResponse(success_url)
-            
         elif DBController.db_filter(User,email=serializer.data['email']).exists():
             user = DBController.db_filter(User, email=serializer.data['email']).first()
             
             if check_password(serializer.data['password'], user.password):
                 SessionController.user_session_in(request, serializer.data['email'])
-                
                 # request.session['email'] = serializer.data['email']
                 success_url = {"url":"content", "realname": user.realname}
                 return JsonResponse(success_url)
             else:
                 return JsonResponse(sign_in["password_check"])
-        
         else:
             return JsonResponse(sign_in["email_check"])
         
