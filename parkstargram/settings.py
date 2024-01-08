@@ -57,8 +57,12 @@ WSGI_APPLICATION = 'parkstargram.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'django_insta',
+        'USER': 'root',
+        'PASSWORD': 'password',
+        'HOST': '0.0.0.0',
+        'PORT': '3306',
     }
 }
 

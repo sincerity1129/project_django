@@ -1,0 +1,12 @@
+version: '3'
+
+services:
+  insta_mysql:
+    image: mysql:8.2.0
+    container_name: insta_mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+    ports:
+      - 3306:3306
+    restart: always
+
