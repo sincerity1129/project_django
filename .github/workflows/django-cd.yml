@@ -9,18 +9,17 @@ jobs:
   build:
 
   runs-on: ubuntu-latest
-
-    steps:
-      - name: connect ec2
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secreats.HOST }}
-          username: ${{ secreats.USERNAME }}
-          key: ${{ secreats.KEY }}
-          port: 22
-          script: |
-            cd /home/ubuntu/project_django
-            git pull
-            sudo docker-compose up -d --build
-            sh stop.sh
-            sh start.sh
+  steps:
+    - name: connect ec2
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secreats.HOST }}
+        username: ${{ secreats.USERNAME }}
+        key: ${{ secreats.KEY }}
+        port: 22
+        script: |
+          cd /home/ubuntu/project_django
+          git pull
+          sudo docker-compose up -d --build
+          sh stop.sh
+          sh start.sh
