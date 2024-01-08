@@ -1,9 +1,9 @@
 name: Django CD
-
-workflow_run:
-  workflows: ["Django CI"]
-  types:
-    - completed
+on:
+  workflow_run:
+    workflows: [ "Django CI" ]
+    types:
+      - completed
 
 jobs:
   build:
