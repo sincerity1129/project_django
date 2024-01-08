@@ -42,6 +42,22 @@
     source venv/bin/activate
 #### 설치 라이브러리
     pip install Django==5.0 djangorestframework==3.14.0 django-storages==1.14.2
+#### folder 추가
+##### 이미지 생성 경로
+    # git 최상위 폴더 이동
+    mkdir media
+    cd media
+    # 피드 이미지 저장 경로
+    mkdir backImage
+    # 프로필 이미지 저장 경로
+    mkdir profile
+##### 기본 생성이미지 파일
+    # git 최상위 경로
+    vim config/path_cfg.py
+    # 계정 생성 시 기본 프로필 이미지 file 경로
+    DefaultProfileImagePath
+    # 피드 생성 시 이미지 없으면 랜덤 생성 이미지 file 경로
+    BackGroundImageFiles 
 
 ### 실행 방법
 #### Django 실행
