@@ -49,6 +49,7 @@ class SignIn(APIView):
         elif DBController.db_filter(User,email=serializer.data['email']).exists():
             user = DBController.db_filter(User, email=serializer.data['email']).first()
             
+            
             if check_password(serializer.data['password'], user.password):
                 SessionController.user_session_in(request, serializer.data['email'])
                 # request.session['email'] = serializer.data['email']

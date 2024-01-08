@@ -17,9 +17,9 @@ class UserTest(TestCase):
         self.assertEqual(user.nickname, Tester["nickname"])
         
     def test_login(self):
+        self.client.post('/join', data=Tester)
         response = self.client.post('/login', data=dict(
              email = Tester['email'],
              password = Tester['password']
-             ))
-        
+        ))
         self.assertEqual(response.status_code, 200) 
