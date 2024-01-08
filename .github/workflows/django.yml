@@ -25,6 +25,8 @@ jobs:
     - name : Mysql DB Container
       run: |
         docker-compose up -d
+    - name: Wait for MySQL to start
+      run: sleep 10
     - name : DB migrate
       run: |
         python manage.py migrate
