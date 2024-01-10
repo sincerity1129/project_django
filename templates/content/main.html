@@ -210,6 +210,7 @@
       </div>
     </div>
     <!-- second modal -->
+    {% block new_feed %}
     <div  id="second_modal" class="modal_overlay" style="z-index: 200; width:100%; height:100%; position:absolute; left:0; top:0; display: none; flex-direction: column; align-items: center; justify-content: center; background: rgba(0,0,0,0.8); backdrop-filter: blur(1.5px); -webkit-backdrop-filter:blur(1.5px);">
       <div class="modal_window" style="flex-direction:column; background: white; backdrop-filter: blur(13.5px); -webkit-backdrop-filter: blur(13.5px); border-radius: 10px; border: 1px solid rgba(255, 255, 255, 0.18);  width: 800px; height: 600px;  position: relative; padding: 10px;" >
         <div style="display: flex; flex-direction:row; justify-content:space-between;" class="modal_title_side">
@@ -236,6 +237,7 @@
         </div>
       </div>
     </div>
+    {% endblock %}
     <!-- profile update modal -->
     <div  id="profile_update_modal" class="modal_overlay" style="z-index: 200; width:100%; height:100%; position:absolute; left:0; top:0; display: none; flex-direction: column; align-items: center; justify-content: center; background: rgba(0,0,0,0.8); backdrop-filter: blur(1.5px); -webkit-backdrop-filter:blur(1.5px);">
       <div class="modal_window" style="flex-direction:column; background: white; backdrop-filter: blur(13.5px); -webkit-backdrop-filter: blur(13.5px); border-radius: 10px; border: 1px solid rgba(255, 255, 255, 0.18);  width: 800px; height: 600px;  position: relative; padding: 10px;" >

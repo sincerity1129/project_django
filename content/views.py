@@ -72,6 +72,8 @@ class ContentProcess(APIView):
         delete_feed_id = request.data.get('delete_feed_id')
         del_content_image = db_filter(Contents, id=delete_feed_id).first().content_image
         ImageController.image_remove(del_content_image, BackGroundRandomImageFolder)
+        db_delete(Comment, feed_number=delete_feed_id)
+        db_delete(FeedLike, feed_number=delete_feed_id)
         db_delete(Contents, id=delete_feed_id)
         return JsonResponse(feed["delete"])
 
