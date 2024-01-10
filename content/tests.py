@@ -22,7 +22,7 @@ class ContentTest(TestCase):
     
     # content data create
     def _content_data_create(self):
-        db_create(Contents, content_image=content_test_image['file'],
+        d.db_create(Contents, content_image=content_test_image['file'],
                                 nickname=content_test_image['new_feed_content_text'],
                                 content_text=content_test_image['new_feed_content_text'])
     
