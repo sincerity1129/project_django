@@ -1,6 +1,6 @@
 from django.test import TestCase
 
-from common.db_controller import DBController
+from common.db_controller import *
 from config.test_cfg import *
 from config.default_user_create import Tester
 from content.models import Contents, Comment
@@ -22,13 +22,13 @@ class ContentTest(TestCase):
     
     # content data create
     def _content_data_create(self):
-        DBController.db_create(Contents, content_image=content_test_image['file'],
+        db_create(Contents, content_image=content_test_image['file'],
                                 nickname=content_test_image['new_feed_content_text'],
                                 content_text=content_test_image['new_feed_content_text'])
     
     # content data parsing    
     def _content_data_filter(self):
-        content = DBController.db_filter(Contents, content_text=content_test_image['new_feed_content_text']).first()
+        content = db_filter(Contents, content_text=content_test_image['new_feed_content_text']).first()
         return content
         
         
@@ -68,12 +68,12 @@ class CommnetTest(ContentTest):
         
     # comment data create
     def _comment_data_create(self):
-        DBController.db_create(Comment, comment_user_nickname=Tester['email'],
+        db_create(Comment, comment_user_nickname=Tester['email'],
                                feed_number=self.feed_ori.id,comment_text=self.commnet_content)
         
     # comment data parsing
     def _comment_data_filter(self):
-        comment =  DBController.db_filter(Comment, feed_number=self.feed_ori.id).first()
+        comment =  db_filter(Comment, feed_number=self.feed_ori.id).first()
         return comment
         
         
@@ -102,7 +102,7 @@ class ETCTest(ContentTest):
         self._user_create()
         
     def _user_create(self):
-        DBController.db_create(User, email=Tester['email'], password=Tester['password'],
+        db_create(User, email=Tester['email'], password=Tester['password'],
                                realname=Tester['realname'], nickname=Tester['nickname'])
     
     # ETC test start
@@ -129,7 +129,7 @@ class ETCTest(ContentTest):
         self.assertEqual(response.status_code, 200)
         
         from django.contrib.auth.hashers import check_password
-        update_user=DBController.db_filter(User, email=Tester["email"]).first()
+        update_user=db_filter(User, email=Tester["email"]).first()
         self.assertTrue(check_password(profile_update_add_password['profile_update_password'], update_user.password))
         
         
@@ -142,7 +142,7 @@ class feedLikeTest(ContentTest):
         self.user = self._user_filter()
         
     def _user_filter(self):
-        user = DBController.db_filter(User, email=Tester["email"]).first()
+        user = db_filter(User, email=Tester["email"]).first()
         return user
         
     def test_like_click(self):
@@ -150,7 +150,7 @@ class feedLikeTest(ContentTest):
             feed_number = self.feed_ori.id
         )
         create_response = self.client.post('/follow/like_click', data=feed_number)
-        content_heart_update = DBController.db_filter(Contents, id=self.feed_ori.id).first()
+        content_heart_update = db_filter(Contents, id=self.feed_ori.id).first()
         self.assertTrue(content_heart_update.heart_count, 1)
         self.assertEqual(create_response.status_code, 200)
         
@@ -160,6 +160,6 @@ class feedLikeTest(ContentTest):
             user_id=self.user.id
         )
         response = self.client.post('/follow/follow_add', data=user_id)
-        user_follow_update = DBController.db_filter(User, email=Tester["email"]).first()
+        user_follow_update = db_filter(User, email=Tester["email"]).first()
         self.assertTrue(user_follow_update.follow_number, 1)
         self.assertEqual(response.status_code, 200)
