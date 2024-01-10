@@ -248,72 +248,70 @@
             </span>
           </div>
         </div>
-        <div style="display: flex; flex-direction:row; width:100%; height:93%;">
-          <div  style="display: flex; flex-direction: column;">
-            <div style="text-align: center; font-weight: bold;">현재 프로필 이미지 && 변경 프로필 이미지</div>
-            <div class="image_upload" style="width:90%; height:100%; margin: 0 20px;">
-              {% block profile_update_image %}
-                <img id="profile_update_image" class="profile" style="width:100%; height:100%; object-fit:cover;" src="{{user_info.profile}}">
-              {% endblock %}
+        {% block profile_update_image %}
+          <div style="display: flex; flex-direction:row; width:100%; height:93%;">
+            <div  style="display: flex; flex-direction: column;">
+              <div style="text-align: center; font-weight: bold;">현재 프로필 이미지 && 변경 프로필 이미지</div>
+              <div class="image_upload" style="width:90%; height:100%; margin: 0 20px;">
+                <img id="profile_update_image" class="profile" style="width:100%; height:100%; object-fit:cover;" src="{{user_info.profile}}">       
+              </div>
             </div>
-          </div>
-          <div class="profile_update_area" style="width:60%; height:100%; outline: soild 1px gray;">
-            <div style="display: flex; flex-direction:row; align-items:center;">
-              <div class="box" style="width:50px; height:50px; border-radius:70%; overflow:hidden; margin:5px;">
-                {% block profile_preview_box %}
+            <div class="profile_update_area" style="width:60%; height:100%; outline: soild 1px gray;">
+              <div style="display: flex; flex-direction:row; align-items:center;">
+                <div class="box" style="width:50px; height:50px; border-radius:70%; overflow:hidden; margin:5px;">
                   <img id="profile_preview_box" class="profile" style="width:100%; height:100%; object-fit:cover;" src="{{user_info.profile}}">  
-                {% endblock %}
+                </div>
+                <div id="update_user_nick_name">{{user_info.nickname}}</div>
               </div>
-              <div id="update_user_nick_name">{{user_info.nickname}}</div>
+              <div class="profile_update_box" style="margin: 15px 0;">
+                <div class="profile_email" style="margin: 10px; margin-left:20px;">
+                  이메일 주소: <b>{{user_info.email}}</b>
+                </div>
+                <div class="profile_nickname" style="margin: 10px; margin-left:20px;">
+                  유저 아이디: <b>{{user_info.nickname}}</b>
+                </div>
+                <div id="new_image_upload" style="margin: 10px; margin-left:20px; display:flex; flex-direction:column;">
+                  <div style="display:flex; flex-direction:raw;">
+                    <div> 프로필 변경: </div>
+                    <button id="profile_image_preview_button" style="margin-left:15px; font-weight:bold; text-decoration:none; color: white; background: red;">미리보기</button>
+                  </div>
+                  <input id="profile_image_upload_input" type="file" name="image" id="image" accept="image/*">
+                </div>
+                <div style="margin: 10px; margin-left:20px; display:flex; flex-direction:row;"> 
+                  <div> 비밀번호 변경하기: </div>
+                  <a href="#" id="password_update_controller" style="margin-left:10px;">수정하기</a>
+                </div>
+                <div id="profile_password_update" style="margin: 10px; margin-left:20px; display:none; flex-direction:column;">
+                  <div class="now_password">
+                    <div class="password_input_tool"> 
+                      <div class="form-floating mb-3" style="display: flex; flex-direction:row; justify-content:space-between; width: 81%;">
+                          <input type="password" style="font-size: 14px; min-height:0%; height: 10px;" id="profile_now_password" class="form-control"  placeholder="Password">
+                          <label for="floatingInput" style="font-size: 8px; padding: 4px 10px;">현재 비밀번호</label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="update_paswword">
+                    <div class="password_input_tool"> 
+                      <div class="form-floating mb-3" style="display: flex; flex-direction:row; justify-content:space-between; width: 81%;">
+                          <input type="password" style="font-size: 14px; min-height:0%; height: 10px;" id="profile_update_password" class="form-control" placeholder="Password">
+                          <label for="floatingInput" style="font-size: 8px; padding: 4px 10px;">변경 비밀번호</label>
+                      </div>
+                    </div>
+                  </div>
+                  <div>
+                    <div class="password_input_tool"> 
+                      <div class="form-floating mb-3" style="display: flex; flex-direction:row; justify-content:space-between; width: 81%;">
+                          <input type="password" style="font-size: 14px; min-height:0%; height: 10px;"id="profile_update_password_confirm" class="form-control" placeholder="Password">
+                          <label for="floatingInput" style="font-size: 8px; padding: 4px 10px;">비밀번호 확인</label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <button type="button" id="profile_content_update_btn" class="btn" style="width: 85%; height: 10%; color: white; background: blue;">수정완료</button>
             </div>
-            <div class="profile_update_box" style="margin: 15px 0;">
-              <div class="profile_email" style="margin: 10px; margin-left:20px;">
-                이메일 주소: <b>{{user_info.email}}</b>
-              </div>
-              <div class="profile_nickname" style="margin: 10px; margin-left:20px;">
-                유저 아이디: <b>{{user_info.nickname}}</b>
-              </div>
-              <div id="new_image_upload" style="margin: 10px; margin-left:20px; display:flex; flex-direction:column;">
-                <div style="display:flex; flex-direction:raw;">
-                  <div> 프로필 변경: </div>
-                  <button id="profile_image_preview_button" style="margin-left:15px; font-weight:bold; text-decoration:none; color: white; background: red;">미리보기</button>
-                </div>
-                <input id="profile_image_upload_input" type="file" name="image" id="image" accept="image/*">
-              </div>
-              <div style="margin: 10px; margin-left:20px; display:flex; flex-direction:row;"> 
-                <div> 비밀번호 변경하기: </div>
-                <a href="#" id="password_update_controller" style="margin-left:10px;">수정하기</a>
-              </div>
-              <div id="profile_password_update" style="margin: 10px; margin-left:20px; display:none; flex-direction:column;">
-                <div class="now_password">
-                  <div class="password_input_tool"> 
-                    <div class="form-floating mb-3" style="display: flex; flex-direction:row; justify-content:space-between; width: 81%;">
-                        <input type="password" style="font-size: 14px; min-height:0%; height: 10px;" id="profile_now_password" class="form-control"  placeholder="Password">
-                        <label for="floatingInput" style="font-size: 8px; padding: 4px 10px;">현재 비밀번호</label>
-                    </div>
-                  </div>
-                </div>
-                <div class="update_paswword">
-                  <div class="password_input_tool"> 
-                    <div class="form-floating mb-3" style="display: flex; flex-direction:row; justify-content:space-between; width: 81%;">
-                        <input type="password" style="font-size: 14px; min-height:0%; height: 10px;" id="profile_update_password" class="form-control" placeholder="Password">
-                        <label for="floatingInput" style="font-size: 8px; padding: 4px 10px;">변경 비밀번호</label>
-                    </div>
-                  </div>
-                </div>
-                <div>
-                  <div class="password_input_tool"> 
-                    <div class="form-floating mb-3" style="display: flex; flex-direction:row; justify-content:space-between; width: 81%;">
-                        <input type="password" style="font-size: 14px; min-height:0%; height: 10px;"id="profile_update_password_confirm" class="form-control" placeholder="Password">
-                        <label for="floatingInput" style="font-size: 8px; padding: 4px 10px;">비밀번호 확인</label>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <button type="button" id="profile_content_update_btn" class="btn" style="width: 85%; height: 10%; color: white; background: blue;">수정완료</button>
           </div>
-        </div>
+        {% endblock %}
       </div>
     </div>
     <!-- feed update modal -->
