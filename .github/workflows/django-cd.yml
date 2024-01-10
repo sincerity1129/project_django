@@ -3,6 +3,7 @@ on:
   workflow_run:
     workflows: [ "Django CI" ]
     types:
+      - completed
       - requested
 jobs:
   build:
