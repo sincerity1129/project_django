@@ -10,7 +10,7 @@ class UserTest(TestCase):
         response = self.client.post('/join', data=Tester)
         self.assertEqual(response.status_code, 200)
         
-        user = ab.db_filter(User, email=Tester["email"]).first()
+        user = b.db_filter(User, email=Tester["email"]).first()
         self.assertEqual(user.email, Tester["email"])
         self.assertTrue(check_password(Tester["password"], user.password))
         self.assertEqual(user.realname, Tester["realname"])
