@@ -1,35 +1,23 @@
-name: Django CI
+name: Django CD
 on:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+  workflow_run:
+    workflows: ["Django CI"]
+    types:
+      - completed
 jobs:
   build:
     runs-on: ubuntu-latest
-    strategy:
-      max-parallel: 4
-      matrix:
-        python-version: [3.10.12]
-
     steps:
-    - uses: actions/checkout@v3
-    - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v3
-      with:
-        python-version: ${{ matrix.python-version }}
-    - name: Install Dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install -r requirements.txt
-    - name : Mysql DB Container
-      run: |
-        docker-compose up -d
-    - name: Wait for MySQL to start
-      run: sleep 10
-    - name : DB migrate
-      run: |
-        python manage.py migrate
-    - name: Run Tests
-      run: |
-        python manage.py test
+      - name: connect ec2
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.KEY }} 
+          port: 22
+          if: github.event.workflow_run.conclusion == 'success'
+          script: |
+            cd /home/ubuntu/project_django
+            git pull
+            sh stop.sh
+            sh start.sh
