@@ -5,7 +5,7 @@ from common.db_controller import DBController
 from config.default_user_create import Tester
 from user.models import User
 
-class UserTest(TestCase):    
+class UserTest(TestCase):
     def test_join(self):
         response = self.client.post('/join', data=Tester)
         self.assertEqual(response.status_code, 200)

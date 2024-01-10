@@ -10,7 +10,7 @@ from config.path_cfg import BackGroundRandomImageFolder, ProfileImageFolder
 from content.models import Contents, Comment
 from feedlike.models import FeedLike, Follow
 from user.models import User
-from status_message.content_status_code import feed, comment, preview, profile, pagemove, logout
+from status_message.content_status_code import *
 from common.common_controller import json_merge
 from common.content_controller import ImageController
 from common.db_controller import DBController

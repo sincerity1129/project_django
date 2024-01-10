@@ -8,7 +8,6 @@ app_name = 'content_app'
 urlpatterns = [
     path('', ContentProcess.as_view(), name="content_home"),
     path('comment', CommentProcess.as_view(), name="comment"),
-    path('upload', ContentProcess.as_view(), name="upload"),
     path('profile_image_update',profile_image_update, name='profile_image_update'),
     path('profile_update', profile_update, name='profile_update'),
     path('update_image_upload', update_image_upload, name="update_image_upload"),
