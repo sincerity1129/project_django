@@ -166,3 +166,9 @@ $('.link_move').click(function(){
   </div>
 </div>
 {% endblock %}
+{% block profile_update_image %}
+<img id="profile_update_image" class="profile" style="width:100%; height:100%; object-fit:cover;" src="{{user_info.session_user.profile}}">
+{% blockend %}
+{% block profile_preview_box %}
+<img id="profile_preview_box" class="profile" style="width:100%; height:100%; object-fit:cover;" src="{{user_info.session_user.profile}}">  
+{% blockend %}
