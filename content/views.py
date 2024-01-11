@@ -4,7 +4,7 @@ from django.http import JsonResponse
 from rest_framework.views import APIView
 from django.contrib.auth.hashers import check_password, make_password
 from django.utils.datastructures import MultiValueDictKeyError
-from config.path_cfg import BackGroundRandomImageFolder, ProfileImageFolder
+from config.path_cfg import BackGroundImageFiles, ProfileImageFolder
 
 
 from content.models import Contents, Comment
@@ -47,14 +47,14 @@ class ContentProcess(APIView):
     def post(self, request):
         try:
             file = request.FILES["file"]
-            image = ImageController.image_convert(file, BackGroundRandomImageFolder)
+            image = ImageController.image_convert(file, BackGroundImageFiles)
             new_feed_content_text = request.data.get('new_feed_content_text')
             nickname = request.data.get('nickname')
             db_create(Contents, content_image=image, content_text=new_feed_content_text, nickname=nickname)
             return JsonResponse(feed["success"])
         
         except MultiValueDictKeyError as e:
-            image = ImageController.feed_default_random_image_select(BackGroundRandomImageFolder)
+            image = ImageController.feed_default_random_image_select()
             new_feed_content_text = request.data.get('new_feed_content_text')
             nickname = request.data.get('nickname')
             db_create(Contents, content_image=image, content_text=new_feed_content_text, nickname=nickname)
@@ -71,7 +71,7 @@ class ContentProcess(APIView):
     def delete(self, request):
         delete_feed_id = request.data.get('delete_feed_id')
         del_content_image = db_filter(Contents, id=delete_feed_id).first().content_image
-        ImageController.image_remove(del_content_image, BackGroundRandomImageFolder)
+        ImageController.image_remove(del_content_image)
         db_delete(Comment, feed_number=delete_feed_id)
         db_delete(FeedLike, feed_number=delete_feed_id)
         db_delete(Contents, id=delete_feed_id)
@@ -128,7 +128,7 @@ def profile_update(request):
                 return JsonResponse(profile_update)
             else:
                 profile_image_update_image_file_path = ImageController.image_convert(profile_image_update_image_file, ProfileImageFolder)
-                ImageController.image_remove(user.profile_image, ProfileImageFolder)
+                ImageController.image_remove(user.profile_image)
                 db_update(User, user_email, profile_image=profile_image_update_image_file_path)
                 profile_update= json_merge(profile=profile["only_profile_image_success"], profile_image_update_image_file_path=profile_image_update_image_file_path)
             return JsonResponse(profile_update)
@@ -145,7 +145,7 @@ def profile_update(request):
                     return JsonResponse(profile_update)
                 else:
                     profile_image_update_image_file_path = ImageController.image_convert(profile_image_update_image_file, ProfileImageFolder)
-                    ImageController.image_remove(user.profile_image, ProfileImageFolder)
+                    ImageController.image_remove(user.profile_image)
                     db_update(User, user_email, password=make_password(profile_update_password), profile_image=profile_image_update_image_file_path)
                     profile_update= json_merge(profile=profile["password_profile_image_success"], profile_image_update_image_file_path=profile_image_update_image_file_path)
                 return JsonResponse(profile_update)

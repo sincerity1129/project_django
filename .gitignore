@@ -1,6 +1,7 @@
 # except folder
 media/
 logs/
+static/
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

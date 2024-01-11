@@ -1,6 +1,5 @@
-from parkstargram.settings import MEDIA_ROOT
-from config.path_cfg import BackGroundRandomImage
-
+from parkstargram.settings import MEDIA_ROOT, STATIC_URL
+from config.path_cfg import BackGroundImageFolder
 from uuid import uuid4
 import os
 
@@ -14,7 +13,7 @@ class ImageController:
         return uuid_name
     
     def feed_default_random_image_select():
-        default_image_path = os.listdir(BackGroundRandomImage)
+        default_image_path = os.listdir(os.join.path(STATIC_URL, BackGroundImageFolder))
         import random
         selected_image = default_image_path[random.randint(0,len(default_image_path))]
         return selected_image

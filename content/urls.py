@@ -1,7 +1,9 @@
-from django.urls import path, include
+from django.urls import path
 from content.views import ContentProcess, CommentProcess, update_image_upload, profile_image_update, profile_update, session_add, session_clear
 from django.conf import settings
 from django.conf.urls.static import static
+
+from config.path_cfg import DefaultProfileImagePath
 
 app_name = 'content_app'
 
