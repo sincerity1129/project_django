@@ -1,7 +1,5 @@
 # Django를 활용한 인스타 페이지 만들기
-
-## 프로세스 보기
-<img width="80%" src="https://github-production-user-asset-6210df.s3.amazonaws.com/80209763/304993830-b11f59cf-4ed0-41b8-a11a-c126e1a57a09.mp4?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAVCODYLSA53PQK4ZA%2F20240215%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20240215T080028Z&X-Amz-Expires=300&X-Amz-Signature=02d1a065dae7eef2c8ceca7ab70decf4ccfd813fca9c3af3ead03a5988fc630b&X-Amz-SignedHeaders=host&actor_id=80209763&key_id=0&repo_id=737980149"/>
+<img width="80%" src="https://github-production-user-asset-6210df.s3.amazonaws.com/80209763/304993830-b11f59cf-4ed0-41b8-a11a-c126e1a57a09.mp4?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAVCODYLSA53PQK4ZA%2F20240215%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20240215T080131Z&X-Amz-Expires=300&X-Amz-Signature=288c2c665694de0dd909ddfacedce826e1794af78bf2f60d9832619ef59854f0&X-Amz-SignedHeaders=host&actor_id=80209763&key_id=0&repo_id=737980149"/>
 
 ### 설치 환경
     Ubuntu 22.04
