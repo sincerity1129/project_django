@@ -1,6 +1,7 @@
 # Django를 활용한 인스타 페이지 만들기
-<img width="80%" src="https://github.com/sincerity1129/project_django/assets/80209763/b11f59cf-4ed0-41b8-a11a-c126e1a57a09"/>
 
+## 프로세스 보기
+<img width="80%" src="https://github.com/sincerity1129/project_django/assets/80209763/b11f59cf-4ed0-41b8-a11a-c126e1a57a09"/>
 
 ### 설치 환경
     Ubuntu 22.04
