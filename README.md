@@ -1,6 +1,5 @@
 # Django를 활용한 인스타 페이지 만들기
 <img width="80%" src="https://github.com/sincerity1129/project_django/assets/80209763/d2e47b11-41ba-4b05-b3cd-b31a60f4b466"/>
-
 ### 설치 환경
     Ubuntu 22.04
     python  3.10.12
